@@ -7,6 +7,7 @@ import './App.css'
 
 function App() {
   const [chatHistory, setChatHistory] = useState([])
+  const [showChatbot, setShowchatbot] = useState(false)
   const chatBodyRef = useRef()
 
   const generateResponses = async history => {
@@ -41,7 +42,14 @@ function App() {
   }, [chatHistory])
 
   return (
-    <div className="container">
+    <div className={`container ${showChatbot ? 'show-chatbot' : ""}`}>
+      <div>
+        <p className={`${showChatbot ? "none" : "para"}`}>Click me to chat</p>
+        <button onClick={() => setShowchatbot(prev => !prev)} id="chatbot-toggler">
+          <span className='material-symbols-rounded'>mode_comment</span>
+          <span className='material-symbols-rounded'>close</span>
+        </button>
+      </div>
       <div className="chatbot-popup">
         {/*chatbot-header */}
         <div className="chatbot-header">
@@ -49,7 +57,12 @@ function App() {
             <ChatbotIcon />
             <h2 className='logo-text'>Chatbot</h2>
           </div>
-          <button className='material-symbols-rounded'>keyboard_arrow_down</button>
+          <button 
+            className='material-symbols-rounded'
+            onClick={() => setShowchatbot(prev => !prev)}
+          >
+            keyboard_arrow_down
+          </button>
         </div>
         {/*chatbot-body*/}
         <div ref={chatBodyRef} className="chatbot-body">
